@@ -42,9 +42,17 @@ func (b *Bot) RunBot() error {
 }
 
 func (b *Bot) handleUpdate(update tgbotapi.Update) {
-	fmt.Printf("handle new update %v\n", update)
 	if update.Message != nil {
+		fmt.Printf("Handle new message from %s %s with message: %s\n",
+			update.FromChat().FirstName,
+			update.FromChat().LastName,
+			update.Message.Text)
+
 		if update.Message.Document != nil {
+			fmt.Printf("From user %s %s get document name %s",
+				update.FromChat().FirstName,
+				update.FromChat().LastName,
+				update.Message.Document.FileName)
 			text := b.handleDocumentMessage(update.Message.Document)
 			msg := tgbotapi.NewMessage(update.FromChat().ID, text)
 
